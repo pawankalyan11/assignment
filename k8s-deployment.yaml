@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: hello-node
-        image: YOUR_DOCKERHUB_USERNAME/hello-node:latest
+        image: pawankalyan29/task-nodeapp:v2
         ports:
         - containerPort: 3000
 ---
