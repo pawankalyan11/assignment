@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Git Checkout') {
+            steps {
+                echo 'Git checkout'
+                git branch: 'main', url: 'https://github.com/pawankalyan11/assignment.git'
+            }
+        }
+        stage('Build Image') {
+            steps {
+                echo 'Build Image'
+                sh 'docker build -t pawankalyan29/task-nodeapp:v2 .'
+            }
+        }
+        stage('Docke login') {
+            steps {
+                echo 'Docker Login'
+                withCredentials([string(credentialsId: 'dockerhubpass', variable: 'dockerhubpass')]) {
+                sh 'docker login -u pawankalyan29 -p ${dockerhubpass}'
+               }
+            }
+        }
+        stage('Push Image') {
+            steps {
+                echo 'Push Image'
+                sh 'docker push pawankalyan29/task-nodeapp:v2'
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    sh 'kubectl apply -f k8s-deployment.yaml'
+                }
+            }
+        }
+    }
+}
