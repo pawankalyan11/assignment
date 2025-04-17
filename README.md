@@ -5,6 +5,9 @@ This task involves the setting up Continous Integration/ Continous Deploymnet us
 
 PIPELINE STEPS:
 Jenkins Clones the repository from the Git upon each commit.
+
 Jenkins triggers the build process for the Docker image
+
 Once the build is successful, Jenkins pushed the Docker image to Docker registry
+
 After, Jenkins deploys the Docker image to the Kubernetes Cluster using a k8s-deployment.yaml file.
